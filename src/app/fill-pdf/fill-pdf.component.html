@@ -1,0 +1,25 @@
+
+
+<div class="grid grid-flow-col gap-3">
+    <div class="col-span-1 h-100">
+      <pdf-viewer [src]="src"
+        [render-text]="true"
+        [original-size]="false"
+        style="width: 100%; height: 100vh"
+        ></pdf-viewer>
+      </div>
+        <div class="col-span-1">
+            <button  mat-flat-button type="button" color="primary" (click)="savePdf()" > save </button>
+            <button  mat-flat-button type="button" color="primary" (click)="getFields()" > getFields </button>
+            <button  mat-flat-button type="button" color="primary" (click)="this.updatePdf()" > update pdf </button>
+            <button  mat-flat-button type="button" color="primary" (click)="this.getFieldValue()" > get field value </button>
+       <br>
+        <div *ngFor="let field of fields; let i = index" >
+        <h4>{{i+1}} | <span class="text-blue-600" > {{field.type}} </span>  : <span class="text-red-600" >{{field.name}}</span> </h4>
+        </div>
+          </div>
+
+
+        <!-- <app-json-form [jsonFormData] = -->
+</div>
+
