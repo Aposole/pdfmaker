@@ -7,22 +7,32 @@ import { degrees, PDFDocument, rgb } from 'pdf-lib';
 })
 export class FillPdfComponent implements OnInit {
   pdfDoc: any;
-  src: string = 'http://127.0.0.1:8887/OoPdfFormExample.pdf';
+  src: string = 'http://127.0.0.1:8887/multi.pdf';
   pdfBytes: any;
   pdfForm: any;
   pdfZoom:number=1;
   fields
 
   async ngOnInit() {
-    this.src = 'http://127.0.0.1:8887/OoPdfFormExample.pdf';
+    this.src = 'http://127.0.0.1:8887/multi.pdf';
     await this.loadPdf(this.src);
     this.pdfForm = await this.loadForm();
     await this.getFields();
-    this.fillTextField('Given Name Text Box', 'GUIRAT');
-    this.createTextField('Nom Signataire 1 ', '1', 320, 371, 211*0.75 , 25*0.75,0);
-    this.createTextField('Nom Signataire 2 ', '2', 320, 403.2, 211*0.75 , 25*0.75,0);
-    this.createTextField('Nom Signataire 3 ', '3', 319, 455, 211*0.75 , 25*0.75,0);
-    this.fillCheckBox("test checkbox", "fieldInput")
+    // this.fillTextField('Given Name Text Box', 'GUIRAT');
+    this.createTextField(
+      'Nom Signataire 1 ',
+      '1',
+      295.1173828125,
+      340.20750000000004,
+      248,
+      93,
+      0);
+    this.createTextField('Nom Signataire 2 ', '2', 74.6698828125, 470.88, 526 , 30,0);
+    this.createTextField('Nom Signataire 3 ', '3', 415.8148828125, 690.33, 200 , 37,0);
+
+    // this.createTextField('Nom Signataire 2 ', '2', 320, 403.2, 211*0.75 , 25*0.75,0);
+    // this.createTextField('Nom Signataire 3 ', '3', 319, 455, 211*0.75 , 25*0.75,0);
+    // this.fillCheckBox("test checkbox", "fieldInput")
 
   }
 load(src){
@@ -82,24 +92,27 @@ load(src){
     // return page
 
   }
- async createTextField(fieldName, defaultValue, x, y, w, h,pageNum) {
+ async createTextField(fieldName, defaultValue, fromTop, fromLeft, width_, height_,pageNum) {
   const pages = this.pdfDoc.getPages()
    const { width, height } =pages[pageNum].getSize();
     const form = this.pdfDoc.getForm();
     const textField = form.createTextField(fieldName);
     textField.setText(defaultValue);
+    textField.enableMultiline();
     const borderWidth = 1;
     textField.addToPage(pages[0], {
-      x: x + borderWidth,
-      y: height - y - h - borderWidth,
-      width: w,
-      height: h,
+      x: fromTop + borderWidth,
+      y: height - fromLeft - height_ - borderWidth,
+      width: width_,
+      height: height_,
       textColor: rgb(0, 0, 0),
       backgroundColor: rgb(1, 1, 1),
       borderColor: rgb(0, 0, 0),
       borderWidth: borderWidth,
       rotate: degrees(0),
-    });
+    })
+    textField.setFontSize(16);
+
   }
   async savePdf() {
     //  `pdfBytes` can be:
@@ -112,7 +125,7 @@ load(src){
     var fileURL = URL.createObjectURL(file);
     this.src = fileURL
     console.log(fileURL);
-    this.openFileInNewTab(fileURL);
+     this.openFileInNewTab(fileURL);
   }
   openFileInNewTab(fileURL) {
     window.open(fileURL);

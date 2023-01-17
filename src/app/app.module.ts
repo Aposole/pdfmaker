@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FillPdfComponent } from './fill-pdf/fill-pdf.component';
 import { PdfGenerateComponent } from './pdf-generate/pdf-generate.component';
-import { PDFViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,10 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FieldSettingsComponent } from './field-settings/field-settings.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-// import { JsonFormComponent } from './json-form/json-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PdfFormsModule } from './pdf-forms/pdf-forms.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -44,9 +40,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     FillPdfComponent,
     PdfGenerateComponent,
-    PDFViewerComponent,
     FieldSettingsComponent,
-    // JsonFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,11 +73,9 @@ import { SharedModule } from './shared/shared.module';
     MatTabsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    PdfFormsModule,
     SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-platformBrowserDynamic().bootstrapModule(AppModule);

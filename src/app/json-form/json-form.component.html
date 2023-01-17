@@ -1,5 +1,5 @@
-<!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <ion-item *ngFor="let control of jsonFormData?.controls">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let control of jsonFormData?.controls">
       <mat-label>{{ control.label }}</mat-label>
       <input matInput
         *ngIf="
@@ -22,29 +22,29 @@
         [formControlName]="control.name"
         [value]="control.value"
       ></textarea>
-      <ion-checkbox
+      <mat-checkbox
         *ngIf="control.type === 'checkbox'"
         [formControlName]="control.name"
         [checked]="control.value"
-      ></ion-checkbox>
-      <ion-toggle
+      ></mat-checkbox>
+      <mat-toggle
         *ngIf="control.type === 'toggle'"
         [formControlName]="control.name"
         [checked]="control.value"
-      ></ion-toggle>
-      <ion-range
+      ></mat-toggle>
+      <mat-range
         *ngIf="control.type === 'range'"
         [min]="control.options.min"
         [max]="control.options.max"
         [formControlName]="control.name"
       >
-        <ion-icon
+        <mat-icon
           size="small"
           slot="start"
           [name]="control.options.icon"
-        ></ion-icon>
+        ></mat-icon>
         <ion-icon slot="end" [name]="control.options.icon"></ion-icon>
-      </ion-range>
-    </ion-item>
+      </mat-range>
+    </div>
     <button mat-button type="submit">Submit</button>
-  </form> -->
+  </form>

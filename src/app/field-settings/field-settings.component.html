@@ -1,38 +1,79 @@
 <!-- {{this.data|json}} -->
+<h2 mat-dialog-title>Text field</h2>
 <form action="">
-    <mat-form-field class="w-full">
-        <mat-label>Field name</mat-label>
-        <input matInput type="" placeholder="Name your field" value="">
-    </mat-form-field>
-    <mat-form-field class="w-full">
-        <mat-label>Field type</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let type_ of inputTypes" [value]="type_">
-                {{type_| titlecase }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-label>Assignement </mat-label>
-    <mat-radio-group>
-        <div *ngFor="let assigned of assignementList">
-            <mat-radio-button (click)="toggle(assigned.id)" [value]="assigned.id">{{assigned.name}}</mat-radio-button>
-        </div>
-    </mat-radio-group>
-    <mat-form-field class="w-full" *ngIf="showUsers">
-        <mat-label>Select a user</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let user of users" [value]="user.email">
-                {{user.name| titlecase }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field class="w-full" *ngIf="showStages">
-        <mat-label>Select a stage</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let stage of stages" [value]="stage.id">
-                {{stage.name| titlecase }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button mat-flat-button class="float-right py-2" type="btn" color="primary"> Submit </button>
+  <mat-form-field class="w-full">
+    <mat-label>Field name</mat-label>
+    <input matInput type="text" placeholder="Name your field" [(ngModel)]="fieldName"  [ngModelOptions]="{standalone: true}"  required="true" value="">
+  </mat-form-field>
+  <!-- <mat-form-field class="w-full">
+    <mat-label>Field type</mat-label>
+    <mat-select [(ngModel)]=selectedType [ngModelOptions]="{standalone: true}">
+      <mat-option *ngFor="let type_ of inputTypes" [value]="type_" (ngModelChange)="selectedType=type_">
+        {{type_| titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  <ng-container  >
+    <ng-container  >
+    <mat-checkbox [(ngModel)]="has_default_value" (ngModelChange)="setDefaultValue()"  [ngModelOptions]="{standalone: true}" > </mat-checkbox>
+    <mat-label > Set a default field value </mat-label>
+    <br>
+  </ng-container>
+    <mat-checkbox [disabled]="has_default_value" [(ngModel)]="is_Required" (change)="toggleRequired()" [ngModelOptions]="{standalone: true}">
+    </mat-checkbox>
+    <mat-label> Required </mat-label>
+    <br>
+    <mat-checkbox [disabled]="has_default_value" [(ngModel)]="accept_multiple_input" [ngModelOptions]="{standalone: true}"> </mat-checkbox>
+    <mat-label > Accept Multiple Input </mat-label>
+    <ng-container *ngIf="selectedType=='number'">
+      <br>
+      <mat-checkbox [disabled]="has_default_value" [(ngModel)]="has_max_length" [ngModelOptions]="{standalone: true}"> </mat-checkbox>
+      <mat-label> Set max length </mat-label>
+    </ng-container>
+    <ng-container *ngIf="selectedType=='number'">
+      <br>
+      <mat-checkbox [disabled]="has_default_value" [(ngModel)]="has_min_value" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+      <mat-label > Set max value </mat-label>
+    </ng-container>
+    <br>
+    <ng-container *ngIf="selectedType=='number'" >
+    <mat-checkbox [disabled]="has_default_value" [(ngModel)]="has_max_value" [ngModelOptions]="{standalone: true}"> </mat-checkbox>
+    <mat-label > Set min value </mat-label>
+    <br>
+  </ng-container>
+
+  <mat-form-field class="w-full" *ngIf="has_default_value">
+    <mat-label>Select a default value</mat-label>
+    <mat-select  [(ngModel)]="defVal" [ngModelOptions]="{standalone: true} " >
+      <mat-option *ngFor="let default of data.defaultValues | keyvalue" [value]="default.key">
+        {{default.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+<br>
+  <mat-label >Assignement </mat-label>
+  <mat-radio-group>
+    <div *ngFor="let assigned of assignementList">
+      <mat-radio-button (click)="toggle(assigned.id)" [value]="assigned.id">{{assigned.name}}</mat-radio-button>
+    </div>
+  </mat-radio-group>
+  <mat-form-field class="w-full" *ngIf="showUsers">
+    <mat-label>Select a user</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let user of users" [value]="user.email">
+        {{user.name| titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" *ngIf="showStages">
+    <mat-label>Select a stage</mat-label>
+    <mat-select  >
+      <mat-option *ngFor="let stage of stages" [value]="stage.id">
+        {{stage.name| titlecase }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-container>
+  <button mat-flat-button class="float-right py-2" type="btn" color="primary" (click)="submit()" > Submit </button>
 </form>

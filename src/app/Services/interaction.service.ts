@@ -13,23 +13,25 @@ export class InteractionService {
   public coordinates = {
     x: null,
     y: null,
-  };
+  };   min
+
+
   validTargets = [];
   public drag_pos = { x: 0, y: 0 };
   constructor() {}
 
   public init() {
+    console.log('Interaction service has been initialized')
     interact('.' + this.dropzoneClassName).dropzone({
       // only accept elements matching this CSS selector
       accept: '.drag-drop',
       // Require a 90% element overlap for a drop to be possible
-      overlap: 1,
+      overlap: 'center',
       // listen for drop related events:
       ondropactivate: function (event) {
         // add active dropzone feedback
         event.target.classList.add('drop-active');
         event.relatedTarget.classList.add('drop-target');
-        console.log('dropzone activated');
       },
 
       ondragenter: function (event) {
@@ -64,8 +66,17 @@ export class InteractionService {
       .draggable({
         hold: this.holdBeforeDrag,
         inertia: this.inertia,
+
         modifiers: [
+          interact.modifiers.snap({
+            targets: [
+              interact.snappers.grid({ x: 10, y: 10 })
+            ],
+            range: Infinity,
+            relativePoints: [ { x: 0, y: 0 } ]
+          }),
           interact.modifiers.restrict({ restriction: 'self', endOnly: true }),
+
         ],
         autoScroll: true,
         listeners: {
@@ -82,6 +93,7 @@ export class InteractionService {
             console.log('Drop Event '+event);
 
           },
+
           // call this function on every dragend event
           end: (e) => {
             const canvas: HTMLCanvasElement = <HTMLCanvasElement>(
@@ -92,15 +104,14 @@ export class InteractionService {
             //if it has been dropped inside the dropzone, then it should be added to the signers array
             let canDrop = e.target.classList.value.indexOf('can-drop') != -1;
             if (canDrop) {
-              console.log($(e.target).find('.fa-refresh').removeClass('hidden'));
-              console.log($(e.target).find('.handle').css('position','absolute'));
-              console.log($(e.target).find('.handle').css('top','-8px'));
-              console.log($(e.target).find('.handle').css('left','-8px'));
+              $(e.target).find('.fa-refresh').removeClass('hidden');
+              $(e.target).find('.handle').css('position','absolute');
+              $(e.target).find('.handle').css('top','-8px');
+              $(e.target).find('.handle').css('left','-8px');
               $(e.target).addClass('absolute');
 
               e.target.classList.add('resizable');
               const rect = canvas.getBoundingClientRect();
-              console.log(rect)
               const x = e.client.x - rect.x;
               const y = e.client.y - rect.y;
               const ptX = x * 0.75;
@@ -152,12 +163,12 @@ export class InteractionService {
       var x = parseFloat($(this).attr('final-data-x'));
       var y = parseFloat($(this).attr('final-data-y'));
       var email = $(this).html();
-      var pageNumber = $(this).attr('pagenumber');
+      var pageNumber = parseInt($(this).attr('pagenumber'));
       var val = {
-        email: email,
-        X: x * 1.33,
-        Y: y * 1.33,
-        pageNumber: pageNumber,
+        // email: email,
+        X: x * 1.33 + 24,
+        Y: y * 1.33 + 24,
+        pageNumber: pageNumber - 1,
       };
       _valid.push(val);
     });

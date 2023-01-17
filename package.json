@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "postinstall": "patch-package"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -23,14 +22,12 @@
     "@angular/router": "~13.0.0-next.0",
     "@types/jquery": "^3.5.14",
     "@types/pdfjs-dist": "2.1.7",
-    "downloadjs": "^1.4.7",
     "interactjs": "^1.10.17",
     "jquery": "^3.6.2",
     "jspdf": "^2.5.1",
     "ng2-pdf-viewer": "9.0.0",
-    "patch-package": "^6.5.1",
-    "pdf-lib": "^1.17.1",
-    "pdfjs-dist": "2.5.207",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "v2.4.456",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -10,8 +10,6 @@ import {
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import {
   PDFDocument,
-  PDFObjectParsingError,
-  ExceededMaxLengthError,
 } from 'pdf-lib';
 import { PDFAnnotationData } from 'pdfjs-dist';
 import { Input } from './input';
@@ -97,6 +95,8 @@ export class FormFillerComponent {
     annotation.maxLen != null ??
       this.myForm.controls[annotation.fieldName].setValidators([
         Validators.maxLength(annotation.maxLen),
+        Validators.email,
+        // Validators.
       ]);
   }
 
@@ -110,7 +110,7 @@ export class FormFillerComponent {
         height: `${input.height + 5}px`,
         width: `${input.width + 4}px`,
         transform:
-          'matrix(' + this.dpiRatio + ', 0, 0, ' + this.dpiRatio + ', 0, 0)',
+        'matrix(' + this.dpiRatio + ', 0, 0, ' + this.dpiRatio + ', 0, 0)',
         'transform-origin': `${0 - input.left}px` + ' ' + `${0 - input.top}px`,
       };
     } else {
@@ -254,8 +254,6 @@ export class FormFillerComponent {
     try {
       var tempfill = temp.setText(fieldInput);
     } catch (err: unknown) {
-      //  console.log(err )
-      //  console.log(err instanceof ExceededMaxLengthError)
     }
   }
   selectDropdown(ddName, ddSelected) {
@@ -283,7 +281,7 @@ export class FormFillerComponent {
       this.fields.push({ type, name });
     });
   }
-  
+
   async saveFile() {
     //  `pdfBytes` can be:
     //   • Written to a file in Node
