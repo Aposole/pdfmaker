@@ -62,7 +62,7 @@
 
 </div>
       <div *ngFor="let field of fields" class="drag-drop " type="hidden" [value]="field.id">
-          <a class="handle">
+          <a class="handle drag-handle">
               <i class="i fa fa-arrows"></i>
           </a>{{field.fieldName}} {{field.fieldType}}
       </div>
