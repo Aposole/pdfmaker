@@ -7,14 +7,14 @@ import { degrees, PDFDocument, rgb } from 'pdf-lib';
 })
 export class FillPdfComponent implements OnInit {
   pdfDoc: any;
-  src: string = 'http://127.0.0.1:8887/multi.pdf';
+  src: string = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
   pdfBytes: any;
   pdfForm: any;
   pdfZoom:number=1;
   fields
 
   async ngOnInit() {
-    this.src = 'http://127.0.0.1:8887/multi.pdf';
+    this.src = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
     await this.loadPdf(this.src);
     this.pdfForm = await this.loadForm();
     await this.getFields();

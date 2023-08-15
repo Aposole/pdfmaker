@@ -17,7 +17,7 @@ export class PdfGenerateComponent implements OnInit {
 
   pageNumber: number = 1;
   pageZoom: number = 1;
-  pdfSrc: 'http://127.0.0.1:8887/OoPdfFormExample.pdf';
+  pdfSrc: 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
   tasks = [
     {
       id: 1,
