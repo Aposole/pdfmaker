@@ -43,6 +43,7 @@ import { MovableDirective } from './Services/draggable/movable.directive';
 import { SortableListDirective } from './Services/draggable/sortable-list.directive';
 import { DraggableDirective } from './app.component copy';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +98,9 @@ import { DraggableDirective } from './app.component copy';
     MovableAreaDirective, 
     DraggableHelperDirective,
     SortableListDirective
+  ],
+  entryComponents: [
+    
   ],
   providers: [],
   bootstrap: [AppComponent],

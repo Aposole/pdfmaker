@@ -6,6 +6,7 @@ import { FieldSettingsComponent } from 'src/app/field-settings/field-settings.co
 import { MatDialog } from '@angular/material/dialog';
 import { JsonFormData } from 'src/app/json-form/json-form.component';
 import { SignaturePadComponent } from '../signature-pad/signature-pad.component';
+
 enum TextFieldDefaultValues {
   EMAIL ,
   DATE_OF_BIRTH ,
@@ -35,7 +36,7 @@ export class FormGeneratorComponent implements OnInit {
   usedSignature:boolean = false;
   pageNumber: number = 1;
   pageZoom: number = 1;
-
+  
   
 
   pdfSrc = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
@@ -104,17 +105,9 @@ export class FormGeneratorComponent implements OnInit {
 
   }
   signatureField(){
-    const dialogRef = this.dialog.open(SignaturePadComponent, {
-      width: '500px', // You can adjust the dialog width and height as needed
-      height: '400px',
-    });
-  
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'save') {
-        // Handle the saved signature here if needed.
-      } else {
-        // Handle cancel or other actions.
-      }
+    const dialogRef = this.dialog.open(SignaturePadComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      // result will be the signature data url
     });
   }
 

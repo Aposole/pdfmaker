@@ -23,7 +23,8 @@ const routes: Routes = [
     FormFillerComponent,
     FormGeneratorComponent,
     PDFRenderer,
-    SignaturePadComponent
+    SignaturePadComponent,
+    
   ],
   imports: [
     CommonModule,

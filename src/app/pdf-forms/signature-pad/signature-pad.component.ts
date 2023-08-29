@@ -1,49 +1,53 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
+import SignaturePad from 'signature_pad';
 
 @Component({
   selector: 'app-signature-pad',
   templateUrl: './signature-pad.component.html',
-  styleUrls: ['./signature-pad.component.css'],
+  styleUrls: ['./signature-pad.component.css']
 })
-export class SignaturePadComponent {
-  @ViewChild('signatureCanvas') signatureCanvas: ElementRef;
-private ctx: CanvasRenderingContext2D;
-  private isDrawing: boolean = false;
+export class SignaturePadComponent implements AfterViewInit {
 
-  constructor() {}
+  @ViewChild('signatureCanvas') canvas : ElementRef;
+
+  signaturePad: SignaturePad;
+  ctx: CanvasRenderingContext2D;
+
+  constructor(
+    public dialogRef: MatDialogRef<SignaturePadComponent>
+  ) {}
+  
 
   ngAfterViewInit() {
-    this.ctx = this.signatureCanvas.nativeElement.getContext('2d');
-    this.ctx.lineWidth = 2;
-    this.ctx.strokeStyle = '#000';
+    const canvas = this.canvas.nativeElement;
+    this.signaturePad = new SignaturePad(canvas); 
   }
-
-  clearSignature() {
-    this.ctx.clearRect(0, 0, this.signatureCanvas.nativeElement.width, this.signatureCanvas.nativeElement.height);
+  clear() {
+    this.signaturePad.clear(); 
   }
-
-  saveSignature() {
-    const signatureDataUrl = this.signatureCanvas.nativeElement.toDataURL(); // Get the signature as a data URL
-    // You can now send the signatureDataUrl to your server or process it as needed.
-    console.log(signatureDataUrl);
-  }
-
-  @HostListener('mousedown', ['$event'])
-onMouseDown(event: MouseEvent) {
-  this.isDrawing = true;
-  this.ctx.beginPath();
-  // Set starting point for drawing.
+  
+Save() {
+  const data = this.signaturePad.toDataURL();
+  this.dialogRef.close(data);
 }
 
-@HostListener('mousemove', ['$event'])
-onMouseMove(event: MouseEvent) {
-  if (!this.isDrawing) return;
-  // Implement drawing logic here.
+@HostListener('mousedown') 
+onMouseDown() {
+  this.signaturePad.on();
 }
 
-@HostListener('mouseup', ['$event'])
-onMouseUp(event: MouseEvent) {
-  this.isDrawing = false;
-  this.ctx.closePath();
+@HostListener('mousemove')
+onMouseMove() {
+  if(!this.signaturePad) {
+    return; 
+  }
+
+  this.signaturePad.on();
+}
+
+@HostListener('mouseup')
+onMouseUp() {
+  this.signaturePad.off();
 }
 }

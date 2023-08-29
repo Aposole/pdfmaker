@@ -1,5 +1,4 @@
-<div>
-  <canvas #signatureCanvas width="400" height="200"></canvas>
-  <button (click)="clearSignature()">Clear Signature</button>
-  <button (click)="saveSignature()">Save Signature</button>
-</div>
+<canvas #signatureCanvas></canvas>
+
+<button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+<button type="button" class="btn btn-success" (click)="Save()">Save</button>
