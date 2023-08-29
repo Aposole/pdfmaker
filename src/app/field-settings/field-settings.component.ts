@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -15,6 +15,8 @@ export class FieldSettingsComponent implements OnInit {
   showUsers: boolean = false;
   showStages: boolean = false;
   inputTypes: string[] = ['number', 'text'];
+
+  @Output() addFieldEvent = new EventEmitter<any>();
 
   assignementList: any[] = [
     { id: 0, name: 'Anyone' },
@@ -65,16 +67,17 @@ export class FieldSettingsComponent implements OnInit {
   fieldName: string = undefined;
   defVal: number = undefined;
   submit() {
-    var field  = {
-      name: this.fieldName,
-      label: this.fieldName + ' :',
-      value: this.defVal,
-      type: 'text',
+    const field = {
+      fieldName: this.fieldName,
+      fieldType: this.selectedType,
+      X: '0',
+      Y: '0', 
+      assignedTo: 'anyone', 
+      
       validators: {},
     };
     const validatorsToAdd = [];
 
-    var req;
     if (this.is_Required) {
       validatorsToAdd.push(Validators.required)
     }
@@ -82,8 +85,8 @@ export class FieldSettingsComponent implements OnInit {
       validatorsToAdd.push(Validators.email)
     }
     field.validators=validatorsToAdd
-    console.log(field)
-    console.log(field.validators)
+    this.addFieldEvent.emit(field);
+    
   }
   minL:Number = 0;
   maxL:Number = 0;

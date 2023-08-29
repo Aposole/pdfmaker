@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FieldSettingsComponent } from 'src/app/field-settings/field-settings.component';
 import { MatDialog } from '@angular/material/dialog';
 import { JsonFormData } from 'src/app/json-form/json-form.component';
+import { SignaturePadComponent } from '../signature-pad/signature-pad.component';
 enum TextFieldDefaultValues {
   EMAIL ,
   DATE_OF_BIRTH ,
@@ -13,12 +14,6 @@ enum TextFieldDefaultValues {
   LAST_NAME ,
   CURRENT_TIME,
   PHONE
-}
-enum DropdownDefaultValues {
-  GENDER ,
-  COUNTRIES ,
-  WEEKDAYS ,
-  MONTHS
 }
 enum Default_Validators {
   MIN,
@@ -31,7 +26,6 @@ enum Default_Validators {
   PATTERN,
 }
 
-var FieldsColors  = ["#574AE2","#FFBF00","#E83F6F","#480FB5","#6a8d73","#501537"]
 @Component({
   selector: 'app-form-generator',
   templateUrl: './form-generator.component.html',
@@ -41,6 +35,8 @@ export class FormGeneratorComponent implements OnInit {
   usedSignature:boolean = false;
   pageNumber: number = 1;
   pageZoom: number = 1;
+
+  
 
   pdfSrc = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
   fields = [
@@ -82,6 +78,19 @@ export class FormGeneratorComponent implements OnInit {
 
     ) { }
 
+    onAddField(fieldConfig: any) {
+      // Add the new field to the fields array
+      this.fields.push({
+        id: this.fields.length + 1,
+        fieldName: fieldConfig.fieldName,
+        fieldType: fieldConfig.fieldType,
+        X: fieldConfig.X,
+        Y: fieldConfig.Y,
+        pageNumber: fieldConfig.pageNumber,
+        assignedTo: fieldConfig.assignedTo,
+      });
+    }
+
   ngOnInit(): void {
     this.interactService.init();
     this.http.get('/assets/my-form.json').subscribe((FormData:JsonFormData)=>{
@@ -95,19 +104,43 @@ export class FormGeneratorComponent implements OnInit {
 
   }
   signatureField(){
-this.usedSignature = true; // if user uses a signature, every other field gets disabled
-console.log('disabled all fields');
+    const dialogRef = this.dialog.open(SignaturePadComponent, {
+      width: '500px', // You can adjust the dialog width and height as needed
+      height: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'save') {
+        // Handle the saved signature here if needed.
+      } else {
+        // Handle cancel or other actions.
+      }
+    });
   }
 
-  openDialog(def_values,def_validators): void {
+  openDialog(def_values, def_validators): void {
     const dialogRef = this.dialog.open(FieldSettingsComponent, {
-      data: {defaultValues :def_values,defaultValidators: def_validators },
+      data: { defaultValues: def_values, defaultValidators: def_validators },
     });
-    dialogRef.afterClosed().subscribe(result => {
+
+    // Listen for the addFieldEvent emitted from FieldSettingsComponent
+    dialogRef.componentInstance.addFieldEvent.subscribe((fieldConfig: any) => {
+      // Handle the emitted field configuration
+      this.onAddField(fieldConfig);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
     });
   }
+
+  openSignaturePad() {
+    
+  }
+
+
+  
   addTexField(){
 this.openDialog(TextFieldDefaultValues,Default_Validators)
   }

@@ -34,6 +34,8 @@ import { FieldSettingsComponent } from './field-settings/field-settings.componen
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { HeaderComponent } from './header/header.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { SharedModule } from './shared/shared.module';
     FillPdfComponent,
     PdfGenerateComponent,
     FieldSettingsComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +76,7 @@ import { SharedModule } from './shared/shared.module';
     MatTabsModule,
     MatDialogModule,
     ReactiveFormsModule,
+    SignaturePadModule,
     SharedModule
   ],
   providers: [],

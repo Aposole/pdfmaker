@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { FormGeneratorComponent } from './form-generator/form-generator.component';
 import { PDFRenderer } from './form-generator/pdf-viewer/pdf-renderer.component';
+import { SignaturePadComponent } from './signature-pad/signature-pad.component';
 const routes: Routes = [
   {
     component: FormFillerComponent,
@@ -21,7 +22,8 @@ const routes: Routes = [
   declarations: [
     FormFillerComponent,
     FormGeneratorComponent,
-    PDFRenderer
+    PDFRenderer,
+    SignaturePadComponent
   ],
   imports: [
     CommonModule,

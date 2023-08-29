@@ -22,6 +22,7 @@
     "@angular/router": "~13.0.0-next.0",
     "@types/jquery": "^3.5.14",
     "@types/pdfjs-dist": "2.1.7",
+    "angular2-signaturepad": "^4.0.2",
     "interactjs": "^1.10.17",
     "jquery": "^3.6.2",
     "jspdf": "^2.5.1",
@@ -29,6 +30,7 @@
     "pdf-lib": "1.17.1",
     "pdfjs-dist": "v2.4.456",
     "rxjs": "~7.4.0",
+    "signature_pad": "^4.1.6",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
