@@ -36,6 +36,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { DraggableModule } from './Services/draggable/draggable.module';
+import { DraggableHelperDirective } from './Services/draggable/draggable-helper.directive';
+import { MovableAreaDirective } from './Services/draggable/movable-area.directive';
+import { MovableDirective } from './Services/draggable/movable.directive';
+import { SortableListDirective } from './Services/draggable/sortable-list.directive';
+import { DraggableDirective } from './app.component copy';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,12 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     PdfGenerateComponent,
     FieldSettingsComponent,
     HeaderComponent,
+    DraggableDirective, 
+    MovableDirective, 
+    MovableAreaDirective, 
+    DraggableHelperDirective, 
+    SortableListDirective
+    
   ],
   imports: [
     BrowserModule,
@@ -77,7 +89,14 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     MatDialogModule,
     ReactiveFormsModule,
     SignaturePadModule,
-    SharedModule
+    SharedModule, 
+  ],
+  exports: [
+    DraggableDirective, 
+    MovableDirective, 
+    MovableAreaDirective, 
+    DraggableHelperDirective,
+    SortableListDirective
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -29,7 +29,7 @@ export class InteractionService {
     interact('.drag-drop')
       .draggable({
         allowFrom:'.drag-handle',
-        inertia: false,
+        inertia: true,
         onmove: function (event) {
           var target = event.target;
           var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;

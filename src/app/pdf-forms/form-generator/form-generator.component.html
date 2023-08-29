@@ -1,3 +1,5 @@
+
+<div >
 <!-- <div class="grid  auto-cols-max  gap-2 ">
 
   <div class="box row-start-1 row-span-2">
@@ -60,13 +62,13 @@
 </button>
 
 
-</div>
-      <div *ngFor="let field of fields" class="drag-drop " type="hidden" [value]="field.id">
+</div >
+      <div appMovableArea *ngFor="let field of fields" class="drag-drop " type="hidden" [value]="field.id">
           <a class="handle drag-handle">
               <i class="i fa fa-arrows"></i>
           </a>{{field.fieldName}} {{field.fieldType}}
       </div>
-      <pre>
+      <pre appMovable>
 
         {{Coords  | json}}
         <!-- {{this.formData | json}} -->
@@ -74,4 +76,5 @@
       </pre>
   </div>
   </div>
+</div>
 </div>
