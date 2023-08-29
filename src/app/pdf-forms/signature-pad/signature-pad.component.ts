@@ -13,12 +13,17 @@ export class SignaturePadComponent implements AfterViewInit, OnInit {
   private signaturePad: SignaturePad;
   ctx: CanvasRenderingContext2D;
   private isDrawing: boolean = false;
-  private lastX: number;
-  private lastY: number;
   savedSignatureDataUrl: string | null = null;
+  
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.signatureCanvas.nativeElement.width = this.signatureCanvas.nativeElement.offsetWidth;
+    this.signatureCanvas.nativeElement.height = this.signatureCanvas.nativeElement.offsetHeight;
+  }
+
   constructor(
     public dialogRef: MatDialogRef<SignaturePadComponent>
-  ) { }
+  ) {}
 
   ngOnInit() { 
   }
@@ -29,9 +34,10 @@ export class SignaturePadComponent implements AfterViewInit, OnInit {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
+    
     // Configure context styles (line color, width, etc.) if needed
-    this.ctx.strokeStyle = 'black';
-    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = 'black'
+    this.ctx.lineWidth = 2
 
     // Add event listeners
     canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
@@ -54,8 +60,6 @@ export class SignaturePadComponent implements AfterViewInit, OnInit {
   private handleMouseDown(event: MouseEvent) {
     this.isDrawing = true;
     const { offsetX, offsetY } = event;
-    this.lastX = offsetX;
-    this.lastY = offsetY;
     this.ctx.beginPath();
     this.ctx.moveTo(offsetX, offsetY);
   }
@@ -65,8 +69,6 @@ export class SignaturePadComponent implements AfterViewInit, OnInit {
     const { offsetX, offsetY } = event;
     this.ctx.lineTo(offsetX, offsetY);
     this.ctx.stroke();
-    this.lastX = offsetX;
-    this.lastY = offsetY;
   }
 
   private handleMouseUp() {

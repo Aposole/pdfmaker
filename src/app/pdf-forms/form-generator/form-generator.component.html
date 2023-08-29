@@ -68,7 +68,10 @@
     <i class="i fa fa-arrows"></i>
   </a>
   {{field.fieldName}} {{field.fieldType}}
-  <img *ngIf="signatureImage" [src]="signatureImage" alt="Signature" />
+  <div>
+    <img appMovable  class="drag-signature" [src]="signatureImage">
+  </div>
+  
 </div>
       <pre>
 

@@ -5,6 +5,9 @@ import $ from 'jquery';
   providedIn: 'root',
 })
 export class InteractionService {
+  initSignatureInteraction() {
+    throw new Error('Method not implemented.');
+  }
   holdBeforeDrag: number = 0;
   inertia: boolean = false; //  allows drag and resize actions to continue after the user releases the pointer at a fast enough speed
   dropzoneClassName: string = 'dropzone';

@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-
 import { InteractionService } from './../../Services/interaction.service';
 import { Component, OnInit } from '@angular/core';
 import { FieldSettingsComponent } from 'src/app/field-settings/field-settings.component';
@@ -36,7 +35,7 @@ export class FormGeneratorComponent implements OnInit {
   usedSignature:boolean = false;
   pageNumber: number = 1;
   pageZoom: number = 1;
-  
+  signatureImage: string;
   
 
   pdfSrc = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
@@ -59,7 +58,7 @@ export class FormGeneratorComponent implements OnInit {
         Y: fieldConfig.Y,
         pageNumber: fieldConfig.pageNumber,
         assignedTo: fieldConfig.assignedTo,
-        signatureDataUrl: ''
+        signatureDataUrl: this.signatureImage
       });
       
       console.log(this.fields,JSON.stringify(this.fields));
@@ -79,10 +78,8 @@ export class FormGeneratorComponent implements OnInit {
   }
   signatureField(){
     const dialogRef = this.dialog.open(SignaturePadComponent);
-    dialogRef.afterClosed().subscribe((result: string | undefined) => {
-      if (result) {
-        console.log('Signature Data:', result);
-      }
+    dialogRef.afterClosed().subscribe(result => {
+      this.signatureImage = result;
     });
   }
 
