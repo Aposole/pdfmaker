@@ -35,13 +35,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
-import { SignaturePadModule } from 'angular2-signaturepad';
-import { DraggableModule } from './Services/draggable/draggable.module';
 import { DraggableHelperDirective } from './Services/draggable/draggable-helper.directive';
 import { MovableAreaDirective } from './Services/draggable/movable-area.directive';
 import { MovableDirective } from './Services/draggable/movable.directive';
 import { SortableListDirective } from './Services/draggable/sortable-list.directive';
 import { DraggableDirective } from './app.component copy';
+import { SignatureService } from './Services/signature.service';
 
 
 @NgModule({
@@ -89,7 +88,6 @@ import { DraggableDirective } from './app.component copy';
     MatTabsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    SignaturePadModule,
     SharedModule, 
   ],
   exports: [
@@ -102,7 +100,7 @@ import { DraggableDirective } from './app.component copy';
   entryComponents: [
     
   ],
-  providers: [],
+  providers: [SignatureService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

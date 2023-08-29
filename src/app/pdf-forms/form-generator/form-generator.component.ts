@@ -40,36 +40,7 @@ export class FormGeneratorComponent implements OnInit {
   
 
   pdfSrc = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
-  fields = [
-    {
-      id: 1,
-      fieldName: 'Field 1 ',
-      fieldType: 'Input',
-      fromTop: '0',
-      fromLeft: '1',
-      pageNumber: '0',
-      assignedTo: 'anyone',
-
-    },
-    {
-      id: 2,
-      fromTop: 'Field 2',
-      fromLeft: 'Input',
-      X: '0',
-      Y: '1',
-      pageNumber: '0',
-      assignedTo: 'anyone',
-    },
-    {
-      id: 3,
-      fieldName: 'Field 3',
-      fieldType: 'Input',
-      X: '0',
-      Y: '1',
-      pageNumber: '0',
-      assignedTo: 'anyone',
-    },
-  ];
+  fields = [];
   Coords: any[];
   formData: JsonFormData;
   constructor(
@@ -79,8 +50,7 @@ export class FormGeneratorComponent implements OnInit {
 
     ) { }
 
-    onAddField(fieldConfig: any) {
-      // Add the new field to the fields array
+    onAddField(fieldConfig) {
       this.fields.push({
         id: this.fields.length + 1,
         fieldName: fieldConfig.fieldName,
@@ -89,7 +59,10 @@ export class FormGeneratorComponent implements OnInit {
         Y: fieldConfig.Y,
         pageNumber: fieldConfig.pageNumber,
         assignedTo: fieldConfig.assignedTo,
+        signatureDataUrl: ''
       });
+      
+      console.log(this.fields,JSON.stringify(this.fields));
     }
 
   ngOnInit(): void {
@@ -106,8 +79,10 @@ export class FormGeneratorComponent implements OnInit {
   }
   signatureField(){
     const dialogRef = this.dialog.open(SignaturePadComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      // result will be the signature data url
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result) {
+        console.log('Signature Data:', result);
+      }
     });
   }
 
@@ -115,10 +90,7 @@ export class FormGeneratorComponent implements OnInit {
     const dialogRef = this.dialog.open(FieldSettingsComponent, {
       data: { defaultValues: def_values, defaultValidators: def_validators },
     });
-
-    // Listen for the addFieldEvent emitted from FieldSettingsComponent
-    dialogRef.componentInstance.addFieldEvent.subscribe((fieldConfig: any) => {
-      // Handle the emitted field configuration
+    dialogRef.componentInstance.addFieldEvent.subscribe((fieldConfig) => {
       this.onAddField(fieldConfig);
     });
 
@@ -127,14 +99,8 @@ export class FormGeneratorComponent implements OnInit {
       console.log(result);
     });
   }
-
-  openSignaturePad() {
-    
-  }
-
-
   
   addTexField(){
-this.openDialog(TextFieldDefaultValues,Default_Validators)
+    this.openDialog(TextFieldDefaultValues,Default_Validators)
   }
 }

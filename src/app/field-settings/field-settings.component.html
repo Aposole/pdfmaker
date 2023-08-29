@@ -46,7 +46,7 @@
     <mat-label>Select a default value</mat-label>
     <mat-select  [(ngModel)]="defVal" [ngModelOptions]="{standalone: true} " >
       <mat-option *ngFor="let default of data.defaultValues | keyvalue" [value]="default.key">
-        {{default.value }}
+        {{default.value}}
       </mat-option>
     </mat-select>
   </mat-form-field>
