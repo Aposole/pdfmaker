@@ -5,6 +5,7 @@ import { FieldSettingsComponent } from 'src/app/field-settings/field-settings.co
 import { MatDialog } from '@angular/material/dialog';
 import { JsonFormData } from 'src/app/json-form/json-form.component';
 import { SignaturePadComponent } from '../signature-pad/signature-pad.component';
+import { PDFDocument } from 'pdf-lib';
 
 enum TextFieldDefaultValues {
   EMAIL ,
@@ -36,6 +37,12 @@ export class FormGeneratorComponent implements OnInit {
   pageNumber: number = 1;
   pageZoom: number = 1;
   signatureImage: string;
+  pdfDoc: any;
+  pdfBytes: any;
+  pdfForm: any;
+  url = "https://docs.google.com/spreadsheets/d/1fLjKASR_g5wsvOjjJi6RclqMVd2o_1On-OfimXtId4E/export?exportFormat=pdf&format=pdf&size=A4&fzr=true&gid=477517973&sheetnames=false&printtitle=false&pagenumbers=false&gridlines=false&portrait=true&fitw=true&fith=true&top_margin=0.20&bottom_margin=0.20&left_margin=0.20&right_margin=0.20";
+  pdfZoom:number=1;
+  src: string= 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf'
   
 
   pdfSrc = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
@@ -100,4 +107,38 @@ export class FormGeneratorComponent implements OnInit {
   addTexField(){
     this.openDialog(TextFieldDefaultValues,Default_Validators)
   }
+  async loadPdf(src: string) {
+    src = 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf'
+  }
+  async loadPdfFromUrl(src: string) {
+
+    const pdfData = await fetch(src).then(res => res.arrayBuffer());
+    
+    this.pdfDoc = await PDFDocument.load(pdfData);
+  
+  }
+  
+   async savePdf() {
+    //  `pdfBytes` can be:
+    //   • Written to a file in Node
+    //   • Downloaded from the browser
+    //   • Rendered in an <iframe>
+    // Serialize the PDFDocument to bytes (a Uint8Array)
+    await this.loadPdf(this.src);
+    try {
+      await this.loadPdfFromUrl(this.src);
+    } catch(err) {
+      console.error("Error loading PDF", err);
+    }
+    this.pdfBytes = await this.pdfDoc.save();
+    const blob = new Blob([this.pdfBytes], {type: 'application/pdf'})
+    var fileURL = URL.createObjectURL(blob);
+    this.src = fileURL
+    console.log(fileURL);
+    this.openFileInNewTab(fileURL);
+  }
+  openFileInNewTab(fileURL) {
+    window.open(fileURL);
+  }
+  
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { degrees, PDFDocument, rgb } from 'pdf-lib';
 @Component({
   selector: 'app-fill-pdf',

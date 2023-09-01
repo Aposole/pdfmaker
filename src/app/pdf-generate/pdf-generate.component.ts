@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InteractionService } from '../Services/interaction.service';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 import * as $ from 'jquery';
 import { FieldSettingsComponent } from '../field-settings/field-settings.component';
+import { FillPdfComponent } from '../fill-pdf/fill-pdf.component';
 
 @Component({
   selector: 'app-pdf-generate',
@@ -14,7 +15,7 @@ import { FieldSettingsComponent } from '../field-settings/field-settings.compone
 export class PdfGenerateComponent implements OnInit {
 
 
-
+  @ViewChild(FillPdfComponent) fillPdf: FillPdfComponent;
   pageNumber: number = 1;
   pageZoom: number = 1;
   pdfSrc: 'http://foersom.com/net/HowTo/data/OoPdfFormExample.pdf';
@@ -48,6 +49,13 @@ export class PdfGenerateComponent implements OnInit {
     },
   ];
 
+  async savePdf() {
+
+    await this.fillPdf.loadPdf(this.pdfSrc);
+  
+    await this.fillPdf.savePdf();
+  
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FieldSettingsComponent, {

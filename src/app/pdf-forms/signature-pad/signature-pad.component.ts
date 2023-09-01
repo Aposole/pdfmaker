@@ -5,7 +5,7 @@ import SignaturePad from 'signature_pad';
 @Component({
   selector: 'app-signature-pad',
   templateUrl: './signature-pad.component.html',
-  styleUrls: ['./signature-pad.component.css']
+  styleUrls: ['./signature-pad.component.css'],
 })
 export class SignaturePadComponent implements AfterViewInit, OnInit {
 
